@@ -4,6 +4,7 @@ import json
 from .utils import get_hospitals
 from urllib.parse import unquote
 from django.http import Http404
+from django.urls import reverse
 
 
 fake_doctors = [
@@ -18,9 +19,12 @@ fake_doctors = [
 def map(request):
     hospitals = get_hospitals()
     hospitals_json = json.dumps(hospitals)
-    
-    return render(request, 'loc/map.html', {'hospitals_json': hospitals_json})
+    hospital_info_base_url = '/hospital/'
 
+    return render(request, 'loc/map.html', {
+        'hospitals_json': hospitals_json,
+        'hospital_info_base_url': hospital_info_base_url
+    })
 
 
 def hospital_list(request):
