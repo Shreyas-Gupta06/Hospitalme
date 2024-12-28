@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nearby Hospitals</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCinVXEXrCgvbYCTsRPD7nL1zLHISPqsvQ&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var location = {lat: 17.4933, lng: 78.3277};  // Aparna Sarovar, Hyderabad coordinates
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: location
+            });
+
+            var hospitals = JSON.parse('{{ hospitals_json|escapejs }}');  // Convert JSON string to JavaScript array
+            hospitals.forEach(function(hospital) {
+                new google.maps.Marker({
+                    position: {lat: hospital.geometry.location.lat, lng: hospital.geometry.location.lng},
+                    map: map,
+                    title: hospital.name
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+    <a href="{% url 'loc:hospital_list' %}">Go to Nearby Hospital List</a>
+    <h1>Nearby Hospitals</h1>
+    
+    <div id="map" style="height: 500px; width: 100%;"></div>  <!-- Map display -->
+    
+    <!-- <ul>
+        {% for hospital in hospitals %}
+            <li>{{ hospital.name }}</li>  
+        {% endfor %}
+    </ul> -->
+</body>
+</html>

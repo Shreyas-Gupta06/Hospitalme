@@ -1,0 +1,18 @@
+<!-- loc/templates/loc/hospital_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Details</title>
+</head>
+<body>
+    <h1>Nearby Hospitals</h1>
+    <ul>
+        {% for hospital in hospitals %}
+            <li>
+                <a href="{% url 'loc:hospital_info' hospital.name|urlencode %}">{{ hospital.name }}</a> - {{ hospital.vicinity }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
