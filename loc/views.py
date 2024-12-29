@@ -5,7 +5,7 @@ from .utils import get_hospitals
 from urllib.parse import unquote
 from django.http import Http404
 from django.urls import reverse
-
+from django.http import JsonResponse
 
 fake_doctors = [
     {'name': 'Dr. John Doe', 'timing': '9 AM - 12 PM'},
@@ -17,24 +17,72 @@ fake_doctors = [
 
 
 def map(request):
-    hospitals = get_hospitals()
+    # Static location for Delhi
+    lat = 28.6139
+    lng = 77.2090
+    hospitals = get_hospitals(lat, lng)
     hospitals_json = json.dumps(hospitals)
     hospital_info_base_url = '/hospital/'
-
     return render(request, 'loc/map.html', {
         'hospitals_json': hospitals_json,
         'hospital_info_base_url': hospital_info_base_url
     })
 
+    
+
+
+# def map(request):
+#     # lat = request.GET.get('lat')
+#     # lng = request.GET.get('lng')
+
+#     # hospitals = get_hospitals(lat, lng)
+
+
+
+#     lat = 28.6139
+#     lng = 77.2090
+#     hospitals = get_hospitals(lat, lng)
+
+#     hospitals_json = json.dumps(hospitals)
+#     hospital_info_base_url = '/hospital/'
+#     return render(request, 'loc/map.html', {
+#         'hospitals_json': hospitals_json,
+#         'hospital_info_base_url': hospital_info_base_url
+#     })
+
+
+
+
+
+
+
 
 def hospital_list(request):
-    hospitals = get_hospitals()
+    # lat = request.GET.get('lat')
+    # lng = request.GET.get('lng')
+
+    # hospitals = get_hospitals(lat, lng)
+
+    lat = 28.6139
+    lng = 77.2090
+    hospitals = get_hospitals(lat, lng)
+
 
     return render(request, 'loc/hospital_list.html', {'hospitals': hospitals})
 
 
 def hospital_info(request, hospital_name):
-    hospitals = get_hospitals()
+    # lat = request.GET.get('lat')
+    # lng = request.GET.get('lng')
+
+
+    # hospitals = get_hospitals(lat, lng)
+
+
+
+    lat = 28.6139
+    lng = 77.2090
+    hospitals = get_hospitals(lat, lng)
     hospital_name = unquote(hospital_name)  # Decode the URL-encoded hospital name
 
     # Find the hospital by name
